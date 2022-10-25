@@ -19,6 +19,10 @@ return new class extends Migration
             $table->foreign('user_id')
                 ->references('id')->on('users')
                 ->onDelete('set null');
+            $table->bigInteger('music_id')->unsigned()->nullable();
+            $table->foreign('music_id')
+                ->references('id')->on('music')
+                ->onDelete('set null');
             $table->timestamps();
         });
     }

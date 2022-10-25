@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Music extends Model
 {
     use HasFactory;
+
+    public function musicCreater()
+    {
+        return $this->belongsTo(MusicCreater::class);
+    }
 }

@@ -15,11 +15,9 @@ return new class extends Migration
     {
         Schema::create('music', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('music_creater_id')->unsigned()->nullable();
-            $table->foreign('music_creater_id')
-                ->references('id')->on('music_creaters')
-                ->onDelete('set null');
             $table->string('track');
+            $table->integer('duration')->nullable();
+            $table->string('file_path')->nullable();
             $table->timestamps();
         });
     }

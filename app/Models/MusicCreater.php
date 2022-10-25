@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class MusicCreater extends Model
 {
     use HasFactory;
+    public function Track()
+    {
+        return $this->belongsTo(Music::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

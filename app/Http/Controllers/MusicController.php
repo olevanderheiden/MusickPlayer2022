@@ -3,10 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Music;
+use App\Models\MusicCreater;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MusicController extends Controller
 {
+
+    /** Set permission methods */
+//    public function __construct()
+//    {
+//        $this->middleware('auth');
+//        $this->middleware('permission:create music',['only'=>['create','store']]);
+//        $this->middleware('permission:edit music',['only'=>['edit', 'update']]);
+//        $this->middleware('permission:delete music',['only'=>['delete','destroy']]);
+//    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +27,7 @@ class MusicController extends Controller
     public function index()
     {
         $tracks = Music::all();
-        return view('layouts.music.index',compact('tracks'));
+        return view('music.index',compact('tracks'));
     }
 
     /**
@@ -25,8 +37,8 @@ class MusicController extends Controller
      */
     public function create()
     {
-        //
-        return view('tracks.create');
+        $users =  User::all();
+        return view('music.create',compact('users'));
     }
 
     /**
@@ -39,12 +51,14 @@ class MusicController extends Controller
     {
         $track = new Music();
         $track->track = $request->track;
-        $track->artists = $request->artists;
-        $track->isbn = $request->isbn;
-        $track->cover_art = $request->cover_art;
+//        $track->cover_art = $request->cover_art;
         $track->save();
+        $musicCreater = new MusicCreater();
+        $musicCreater->user_id = $request->user_id;
+        $musicCreater->music_id = $track->id;
+        $musicCreater->save();
 
-        return redirect()->route('track.index')->with('message','Nummer toegevoegd');
+        return redirect()->route('music.index')->with('message','Nummer toegevoegd');
     }
 
     /**
@@ -55,7 +69,7 @@ class MusicController extends Controller
      */
     public function show($id)
     {
-        return view('tracks.show', compact('id'));
+        return view('music.show', compact('id'));
     }
 
     /**
@@ -66,7 +80,7 @@ class MusicController extends Controller
      */
     public function edit($id)
     {
-        return view('tracks.edit', compact('id'));
+        return view('music.edit', compact('id'));
     }
 
     /**
@@ -81,14 +95,21 @@ class MusicController extends Controller
         //
     }
 
+
+    public function delete(Music $music)
+    {
+        return view('music.delete',compact('music'));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Music $music)
     {
-        //
+        $music->delete();
+        return redirect()->route('music.index')->with('message','nummer verwijderd');
     }
 }

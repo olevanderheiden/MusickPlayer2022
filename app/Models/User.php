@@ -12,6 +12,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function MusicCreater()
+    {
+        return $this->hasMany(MusicCreater::class,'music_id');
+    }
+
     /**
      * The attributes that are mass assignable.
      *

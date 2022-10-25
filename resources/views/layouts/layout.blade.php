@@ -51,14 +51,6 @@
                     <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Admin Menu
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="{{route('categories.index')}}">
-                            Categoriën Admin
-                        </a>
-                        <a class="dropdown-item" href="{{route('books.index')}}">
-                            Boeken Admin
-                        </a>
-                    </div>
                 </div>
                 @endhasanyrole
 
