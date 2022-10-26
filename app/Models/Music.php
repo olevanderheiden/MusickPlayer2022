@@ -9,8 +9,8 @@ class Music extends Model
 {
     use HasFactory;
 
-    public function musicCreater()
+    public function User()
     {
-        return $this->belongsTo(MusicCreater::class);
+        return $this->belongsTo(User::class);
     }
 }

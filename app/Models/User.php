@@ -12,9 +12,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    public function MusicCreater()
+    public function music()
     {
-        return $this->hasMany(MusicCreater::class,'music_id');
+        return $this->hasMany(Music::class,'user_id');
     }
 
     /**

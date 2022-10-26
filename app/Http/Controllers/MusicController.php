@@ -49,15 +49,22 @@ class MusicController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->file('cover')->extension());
+//        $request->validate([
+//            'title'=>'required',
+//            'user'=>'required',
+//            'cover' => 'required|mimes:pdf,jpg,JPG,png,PNG,jpeg,JPEG|max:2048',
+//            'track'=>'required|mimes:mp3,flac,wav,MP3,FLAC,WAV|max:100000',
+//        ]);
         $track = new Music();
-        $track->track = $request->track;
-//        $track->cover_art = $request->cover_art;
+        $track->track = $request->title;
+        $request->file('cover')->move('public/covers',$request->file('cover')->hashName());
+        $request->file('track')->move('public/tracks',$request->file('track')->hashName());
+        $track->user_id = $request->user_id;
+        $track->cover_file_path = $request->file('cover')->hashName();
+        $track->file_path = $request->file('track')->hashName();
         $track->save();
-        $musicCreater = new MusicCreater();
-        $musicCreater->user_id = $request->user_id;
-        $musicCreater->music_id = $track->id;
-        $musicCreater->save();
-
+//
         return redirect()->route('music.index')->with('message','Nummer toegevoegd');
     }
 

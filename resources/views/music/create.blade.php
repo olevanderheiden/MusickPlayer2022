@@ -22,26 +22,30 @@
         </div>
     @endif
 
-    <form method="POST" action="{{route('music.store')}}">
+    <form method="POST" action="{{route('music.store')}}" enctype="multipart/form-data">
         @csrf
 
         <div class="form-group">
             <label for="title">
-                Boek naam
+                Track naam
             </label>
-            <input type="text" class="form-control" name="title"
-                   value="{{old('title')}}" id="title"
-                   aria-describedby="musicnameHelp" placeholder="Vul Boek naam in">
+            <input type="text" class="form-control" name="title" id="title"
+                   value="{{old('title')}}">
 
         </div>
 
         <div class="form-group">
-            <label for="tack">
-                Muziek nummr
+            <label for="cover">
+                Cover
             </label>
-            <input type="text" class="form-control" name="track"
-                   value="{{old('track')}}" id="track"
-                   aria-describedby="bookIsbnHelp" placeholder="Vul namme van het nummer in">
+            <input type="file" name="cover" value="{{old('cover')}}" id="cover">
+        </div>
+        <div class="form-group">
+            <label for="track">
+                Track
+            </label>
+            <input type="file" name="track" value="{{old('track')}}" id="track"
+                   aria-describedby="musicCoverHelp" placeholder="Voeg track toe">
         </div>
 
         <div class="form-group">
