@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('duration')->nullable();
             $table->string('file_path')->nullable();
             $table->string('cover_file_path')->nullable();
-            $table->boolean('state');
+            $table->boolean('state')->nullable()->default(false);
             $table->timestamps();
         });
     }

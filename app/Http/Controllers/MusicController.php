@@ -104,12 +104,12 @@ class MusicController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Music  $track
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Music $music)
     {
-        return view('music.show', compact('id'));
+        return view('music.show', compact('music'));
     }
 
     /**
@@ -118,9 +118,10 @@ class MusicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Music $music)
     {
-        return view('music.edit', compact('id'));
+        $users = User::all();
+        return view('music.edit', compact('music','users'));
     }
 
     /**
@@ -130,9 +131,14 @@ class MusicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Music $track)
     {
-        //
+        $track->track = $request->title;
+        $track->duration = $request->duration;
+        $track->user_id = $request->user_id;
+        $track->save();
+
+        return redirect()->route('music.index')->with('message', 'Track geupdate');
     }
 
 

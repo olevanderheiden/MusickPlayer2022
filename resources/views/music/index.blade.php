@@ -36,7 +36,7 @@
                 {{$track->track}}
             </td>
             <td>
-                {{$track->created_at}}
+                {{$track->created_at->format('d-m-Y')}}
             </td>
             <td><a class="btn btn-dark" href="{{ route('music.show', ['music' => $track->id]) }}">Details</a></td>
             @if(Auth::user() and Auth::user()->rank == 1)
