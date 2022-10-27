@@ -17,6 +17,7 @@ Route::get('/','App\Http\Controllers\MusicController@index');
 Route::resource('/music', 'App\Http\Controllers\MusicController');
 Route::get('music/{music}/delete', 'App\Http\Controllers\MusicController@delete')->name('music.delete');
 Route::get('music/{music}/state', 'App\Http\Controllers\MusicController@state')->name('music.state');
+Route::post('music/search', 'App\Http\Controllers\musicController@search')->name('music.search');
 
 Auth::routes();
 

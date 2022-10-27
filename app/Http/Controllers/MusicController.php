@@ -25,7 +25,7 @@ class MusicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $result)
+    public function index()
     {
             if (Auth::user() and Auth::user()->rank == 1) {
                 $tracks = Music::all();
@@ -36,6 +36,31 @@ class MusicController extends Controller
             }
 
             return view('music.index', compact('tracks'));
+        }
+
+    /**
+     * Display a listing of the resource. That match the search result
+     *
+     * @return \Illuminate\Http\Response
+     */
+        public function search(Request $request)
+        {
+
+            if (Auth::user() and Auth::user()->rank == 1)
+            {
+                $tracks = Music::select('*')
+                    ->where("track",'like','%'.$request->search.'%')
+                    ->get();
+            }
+            else
+            {
+                $tracks = Music::select('*')
+                    ->where("state", "=", true)
+                    ->where("track",'like','%'.$request->search.'%')
+                    ->get();
+            }
+                return view('music.index', compact('tracks'));
+
         }
 
     /**
