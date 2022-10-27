@@ -6,6 +6,7 @@ use App\Models\Music;
 use App\Models\MusicCreater;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MusicController extends Controller
 {
@@ -24,11 +25,18 @@ class MusicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $result)
     {
-        $tracks = Music::all();
-        return view('music.index',compact('tracks'));
-    }
+            if (Auth::user() and Auth::user()->rank == 1) {
+                $tracks = Music::all();
+            } else {
+                $tracks = Music::select('*')
+                    ->where("state", "=", true)
+                    ->get();
+            }
+
+            return view('music.index', compact('tracks'));
+        }
 
     /**
      * Show the form for creating a new resource.
@@ -58,8 +66,8 @@ class MusicController extends Controller
 //        ]);
         $track = new Music();
         $track->track = $request->title;
-        $request->file('cover')->move('public/covers',$request->file('cover')->hashName());
-        $request->file('track')->move('public/tracks',$request->file('track')->hashName());
+//        $request->file('cover')->move('public/covers',$request->file('cover')->hashName());
+//        $request->file('track')->move('public/tracks',$request->file('track')->hashName());
         $track->user_id = $request->user_id;
         $track->cover_file_path = $request->file('cover')->hashName();
         $track->file_path = $request->file('track')->hashName();
@@ -118,5 +126,18 @@ class MusicController extends Controller
     {
         $music->delete();
         return redirect()->route('music.index')->with('message','nummer verwijderd');
+    }
+    public function state(Music $music)
+    {
+        if ($music->state == true)
+        {
+            $music->state = false;
+        }
+        else
+        {
+            $music->state = true;
+        }
+        $music->save();
+        return redirect()->route('music.index')->with('message','status gewijzigd');
     }
 }

@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Ole van der Heiden',
             'email' => '1034047@hr.nl',
+            'rank' => true,
             'password' => bcrypt('test1234'),
             ]);
         User::factory(10)->create()

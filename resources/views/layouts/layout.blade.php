@@ -48,13 +48,6 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
-                @hasanyrole('sales|admin')
-                <div class="dropdown">
-                    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Admin Menu
-                    </button>
-                </div>
-                @endhasanyrole
 
             </ul>
 
