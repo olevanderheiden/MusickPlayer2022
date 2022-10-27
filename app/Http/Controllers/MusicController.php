@@ -7,6 +7,7 @@ use App\Models\MusicCreater;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use const http\Client\Curl\AUTH_ANY;
 
 class MusicController extends Controller
 {
@@ -120,8 +121,14 @@ class MusicController extends Controller
      */
     public function edit(Music $music)
     {
-        $users = User::all();
-        return view('music.edit', compact('music','users'));
+        if ( Auth::user() and Auth::user()->rank === 1 or $music->user_id === Auth::user()->id ) {
+            $users = User::all();
+            return view('music.edit', compact('music', 'users'));
+        }
+        else
+        {
+            abort(404);
+        }
     }
 
     /**
@@ -136,7 +143,7 @@ class MusicController extends Controller
         $track->track = $request->title;
         $track->duration = $request->duration;
         $track->user_id = $request->user_id;
-        $track->save();
+        $track->update();
 
         return redirect()->route('music.index')->with('message', 'Track geupdate');
     }
@@ -144,7 +151,14 @@ class MusicController extends Controller
 
     public function delete(Music $music)
     {
-        return view('music.delete',compact('music'));
+        if ( Auth::user() and Auth::user()->rank === 1 or $music->user_id === Auth::user()->id ) {
+            return view('music.delete', compact('music'));
+        }
+        else
+        {
+            abort(404);
+        }
+
     }
 
     /**
@@ -160,6 +174,7 @@ class MusicController extends Controller
     }
     public function state(Music $music)
     {
+        if ( Auth::user() and Auth::user()->rank === 1 or $music->user_id === Auth::user()->id ) {
         if ($music->state == true)
         {
             $music->state = false;
@@ -170,5 +185,10 @@ class MusicController extends Controller
         }
         $music->save();
         return redirect()->route('music.index')->with('message','status gewijzigd');
+        }
+        else
+        {
+            abort(404);
+        }
     }
 }

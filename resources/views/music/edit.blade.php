@@ -37,18 +37,24 @@
         <div class="form-group">
             <label for="description">Duur(in deconden)</label>
             <input type="number"  name="duration" id="duration"
-                      class="form-control"> {{ old('duraction', $music->duration) }}</input>
+                      class="form-control" value="{{ old('duraction', $music->duration) }}">
         </div>
         <div class="form-group">
             <label for="user_id">Artiest</label>
             <select name="user_id" id="user_id" class="form-control">
+                @if(Auth::user()->rank == 1)
                 @foreach($users as $user)
                     <option value="{{ $user->id }}"
                             @if(old('user_id', $music->user_id) == $user->id)
                                 selected
                         @endif
                     >{{ $user->name }}</option>
-                @endforeach
+                    @endforeach
+                @else
+                    <option value="{{Auth::user()->id}}"
+                    >{{Auth::user()->name}}
+                    </option>
+                @endif
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>

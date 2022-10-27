@@ -20,7 +20,7 @@ class MusicFactory extends Factory
     public function definition()
     {
         return [
-            'track' => fake()->unique()->name(null),
+            'track' => fake()->unique()->name(),
             'state' => fake()->boolean('90')
         ];
     }

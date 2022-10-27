@@ -7,7 +7,7 @@
 <input class="form-control mr-sm-2" type="search" placeholder="voer naam in" aria-label="Search" name="search" id="search">
 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Zoeken</button>
 </form>
-@if(Auth::user() and Auth::user()->rank == 1)
+@if(Auth::user())
     <a  class="btn-info btn" href="{{route('music.create')}}">nieuw nummer</a>
 @endif
 @if($tracks->count()!==0)
@@ -21,7 +21,7 @@
             Toegevoegd
         </th>
         <th>Details</th>
-        @if(Auth::user() and Auth::user()->rank == 1)
+        @if(Auth::user())
         <th>Bewerken</th>
         <th>Status</th>
         <th>Verwijderen</th>
@@ -39,13 +39,17 @@
                 {{$track->created_at->format('d-m-Y')}}
             </td>
             <td><a class="btn btn-dark" href="{{ route('music.show', ['music' => $track->id]) }}">Details</a></td>
-            @if(Auth::user() and Auth::user()->rank == 1)
+            @if(Auth::user() and Auth::user()->rank == 1 or  $track->user_id === Auth::id())
             <td><a  class="btn btn-dark" href="{{ route('music.edit', ['music' => $track->id]) }}">Bewerken</a></td>
                 <td><a class="btn btn-dark" href="{{route('music.state',['music'=>$track->id])}}">@if($track->state === 0)
                             Deactief
                         @else Actief
                         @endif</a></td>
             <td><a class="btn btn-danger" href="{{ route('music.delete', ['music' => $track->id]) }}">Verwijderen</a></td>
+            @elseif(Auth::user())
+                <td><a disabled="" href="" class="btn btn-warning text-danger">niet mogelijk</a> </td>
+                <td><a disabled="" href="" class="btn btn-warning text-danger">niet mogelijk</a> </td>
+                <td><a disabled="" href="" class="btn btn-warning text-danger">niet mogelijk</a> </td>
             @endif
         </tr>
     @endforeach

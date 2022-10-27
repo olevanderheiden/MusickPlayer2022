@@ -23,6 +23,12 @@ class UserSeeder extends Seeder
             'rank' => true,
             'password' => bcrypt('test1234'),
             ]);
+        \App\Models\User::factory()->create([
+            'name' => 'Stefaan Test',
+            'email' => 'test@test.com',
+            'rank' => false,
+            'password' => bcrypt('test1234'),
+        ]);
         User::factory(10)->create()
             ->each(function ($user)
             {
