@@ -24,10 +24,19 @@
     </div>
     <div class="card-body">
         <h2 class="card-title">{{ $music->title }}</h2>
+        @if(isset($music->cover_file_path))
+        <img width="100ren" height="100ren" src="{{asset('storage/covers/'.$music->cover_file_path)}}">
+        @endif
         <p class="card-text">{{ $music->duration }}</p>
         <p class="card-text"><span class="text-info">Naam:</span> {{ $music->track }}</p>
+        @if(isset($music->cover_file_path))
+            <p class="card-text"><span class="text-info">cover bestands naam:</span> {{ $music->cover_file_path }}</p>
+        @endif
+
+        @if(isset($music->file_path))
+            <p class="card-text"><span class="text-info">Bestands naam:</span> {{ $music->file_path }}</p>
+        @endif
         <p class="card-text"><span class="text-info">Artiest:</span> {{ $music->user->name }}</p>
-        <p class="card-text"><span class="text-info">Duur in seconden:</span> @if(isset($music->duration)){{ $music->duration }}@else Onbekend @endif</p>
         <p class="card-text"><span class="text-info">Gemaakt: </span>{{$music->created_at->format('d-m-Y')}}</p>
         <p class="card-text"><span class="text-info">Bijgewerkt: </span>{{$music->updated_at->format('d-m-Y')}}</>
     </div>

@@ -92,8 +92,9 @@ class MusicController extends Controller
 //        ]);
         $track = new Music();
         $track->track = $request->title;
-//        $request->file('cover')->move('public/covers',$request->file('cover')->hashName());
-//        $request->file('track')->move('public/tracks',$request->file('track')->hashName());
+        $request->file('cover')->storeAs('public/covers',$request->file('cover')->hashName());
+        $request->file('track')->storeAs('public/tracks',$request->file('track')->hashName());
+
         $track->user_id = $request->user_id;
         $track->cover_file_path = $request->file('cover')->hashName();
         $track->file_path = $request->file('track')->hashName();
